@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="cVAOManager">
+      <UniqueIdentifier>{b57a9dec-1157-45de-9e28-19faf765e536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lights">
+      <UniqueIdentifier>{864bc46c-7a76-49f9-8385-743e9484e3c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cMeshObject">
+      <UniqueIdentifier>{1e7d9703-55ad-47d4-8bcd-3c6c5ccebbf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Callback Functions">
+      <UniqueIdentifier>{9991f3da-50cb-4035-a296-2383f748675d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{36e869fc-6dcb-4124-b2aa-0a1b91e1393e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShaderManager">
+      <UniqueIdentifier>{3a1ee2be-6a30-4b13-b81b-5d377ae69730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{5f188811-8c06-4122-a116-168af2f7277d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{968474b3-718d-4ffa-b244-8877b8092e96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="CTextureManager">
+      <UniqueIdentifier>{5978b7d4-e7d2-4bb5-8ef5-55168122f8c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\imGuIZMO.quat">
+      <UniqueIdentifier>{93b8749f-ddde-4558-b529-046891e0dd5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{58d4037c-0942-4275-8bcd-7f6158420af0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{bd0856af-5a14-4234-8001-e2e345859cab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaBrain">
+      <UniqueIdentifier>{aa414f34-98a4-4eb3-bdde-3a6f143c2ff2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Artificial Intelligence">
+      <UniqueIdentifier>{6a6ae4c2-89e1-450b-85bc-55aa1dc726f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation">
+      <UniqueIdentifier>{0537280f-53f3-466a-a2f3-d12e77b0e697}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="savedata">
+      <UniqueIdentifier>{d251e719-3ffc-40a8-9c7a-90734358b25a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{bee1fa1c-4bf1-4d2f-a54e-5ddcb05360de}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cVAOManager\cVAOManager.cpp">
+      <Filter>cVAOManager</Filter>
+    </ClCompile>
+    <ClCompile Include="cVAOManager\c3DModelFileLoader.cpp">
+      <Filter>cVAOManager</Filter>
+    </ClCompile>
+    <ClCompile Include="globalThings.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="cLight.cpp">
+      <Filter>Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="cLightHelper.cpp">
+      <Filter>Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="cLightManager.cpp">
+      <Filter>Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="cMeshObject.cpp">
+      <Filter>cMeshObject</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardCallbackFunctions.cpp">
+      <Filter>Callback Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="cShader.cpp">
+      <Filter>ShaderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="cShaderManager.cpp">
+      <Filter>ShaderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EditGUI.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_impl_opengl3.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_impl_glfw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="C24BitBMPpixel.cpp">
+      <Filter>CTextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="cBasicTextureManager.cpp">
+      <Filter>CTextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CTextureFromBMP.cpp">
+      <Filter>CTextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawObject_function.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imGuIZMO.quat\imGuIZMOquat.cpp">
+      <Filter>imgui\imGuIZMO.quat</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateDungeon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cCommandScheduler.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="cCommandGroup.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="cLuaBrain.cpp">
+      <Filter>LuaBrain</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveTo.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="OrientTo.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpandBeholder.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="GoInvisible.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="Follow.cpp">
+      <Filter>Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="AIBrain.cpp">
+      <Filter>Artificial Intelligence</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationManager.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="CarAnimations.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationEvents.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="JSONPersitence.cpp">
+      <Filter>savedata</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cVAOManager\sModelDrawInfo.h">
+      <Filter>cVAOManager</Filter>
+    </ClInclude>
+    <ClInclude Include="cVAOManager\cVAOManager.h">
+      <Filter>cVAOManager</Filter>
+    </ClInclude>
+    <ClInclude Include="globalOpenGL.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="globalThings.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="cLight.h">
+      <Filter>Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="cLightHelper.h">
+      <Filter>Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="cLightManager.h">
+      <Filter>Lights</Filter>
+    </ClInclude>
+    <ClInclude Include="cMeshObject.h">
+      <Filter>cMeshObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cShaderManager.h">
+      <Filter>ShaderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_glfw.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_opengl3.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_impl_opengl3_loader.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="cVAOManager\c3DModelFileLoader.h">
+      <Filter>cVAOManager</Filter>
+    </ClInclude>
+    <ClInclude Include="C24BitBMPpixel.h">
+      <Filter>CTextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="cBasicTextureManager.h">
+      <Filter>CTextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CTextureFromBMP.h">
+      <Filter>CTextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imGuIZMO.quat\vGizmoMath.h">
+      <Filter>imgui\imGuIZMO.quat</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imGuIZMO.quat\vgMath.h">
+      <Filter>imgui\imGuIZMO.quat</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imGuIZMO.quat\imGuIZMOquat.h">
+      <Filter>imgui\imGuIZMO.quat</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imGuIZMO.quat\vgConfig.h">
+      <Filter>imgui\imGuIZMO.quat</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imGuIZMO.quat\vGizmo.h">
+      <Filter>imgui\imGuIZMO.quat</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerateDungeon.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cCommandScheduler.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="cCommand.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="cLuaBrain.h">
+      <Filter>LuaBrain</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveTo.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="OrientTo.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpandBeholder.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="GoInvisible.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="Follow.h">
+      <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="AIBrain.h">
+      <Filter>Artificial Intelligence</Filter>
+    </ClInclude>
+    <ClInclude Include="quaternion_utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationManager.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="CarAnimations.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationEvents.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="JSONPersitence.h">
+      <Filter>savedata</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GameObject.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\fragmentShader01.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="assets\shaders\vertexShader01.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="imgui\imGuIZMO.quat\readme.md">
+      <Filter>imgui\imGuIZMO.quat</Filter>
+    </None>
+    <None Include="savedata\lightData.json">
+      <Filter>savedata</Filter>
+    </None>
+    <None Include="savedata\modelData.json">
+      <Filter>savedata</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="imgui\LICENSE.txt">
+      <Filter>imgui</Filter>
+    </Text>
+    <Text Include="imgui\imGuIZMO.quat\license.txt">
+      <Filter>imgui\imGuIZMO.quat</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,2 @@
+basic meshName friendlyName position(x,y,z) rotation(x,y,z) scale
+advanced meshName friendlyName bUse_RGBA_colour(1/0) RGBA_Colour(vec4) isWireFrame(1/0) scale bDoNotLight(1/0)
