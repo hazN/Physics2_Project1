@@ -30,6 +30,9 @@
     <ClInclude Include="GDPPhysics\gdp\SoftBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GDPPhysics\gdp\PhysicsWorld.cpp">
@@ -45,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GDPPhysics\gdp\PhysicsFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

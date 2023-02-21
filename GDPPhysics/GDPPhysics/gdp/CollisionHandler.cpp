@@ -179,7 +179,9 @@ namespace physics
 		RigidBody* plane, PlaneShape* planeShape)
 	{
 		// TestMovingSpherePlane
-		if (!TestMovingSpherePlane(sphere->m_PreviousPosition, sphere->m_Position, sphereShape->GetRadius(),
+		Vector3 planepos;
+		plane->GetPosition(planepos);
+		if (!TestMovingSpherePlane(sphere->m_PreviousPosition - planepos, sphere->m_Position - planepos, sphereShape->GetRadius(),
 			planeShape->GetNormal(), planeShape->GetDotProduct()))
 		{
 			return false;
@@ -341,8 +343,8 @@ namespace physics
 
 	bool CollisionHandler::CollideRigidRigid(float dt, RigidBody* rigidA, RigidBody* rigidB)
 	{
-		iShape* shapeB = rigidA->GetShape();
-		iShape* shapeA = rigidB->GetShape();
+		iShape* shapeB = rigidB->GetShape();
+		iShape* shapeA = rigidA->GetShape();
 
 		bool collision = false;
 

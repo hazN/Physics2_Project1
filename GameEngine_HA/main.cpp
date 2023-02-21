@@ -40,9 +40,14 @@
 #include "GameObject/GameObject.h"
 #include <Interface/iPhysicsFactory.h>
 #include <Interface/SphereShape.h>
+#include <Interface/PlaneShape.h>
 #include <GDPPhysics/gdp/PhysicsFactory.h>
-glm::vec3 g_cameraEye = glm::vec3(0.0, 15, -100.0f);
-glm::vec3 g_cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+#include <GDPPhysics/gdp/PhysicsWorld.h>
+#include <GDPPhysics/gdp/CollisionListener.h>
+glm::vec3 g_cameraEye = glm::vec3(0.00f, 100, 0.001f);
+glm::vec3 g_cameraTarget = glm::vec3(1.0f, 1.0f, 1.0f);
+std::vector<GameObject*> physicObjects;
+extern int ballIndex;
 cBasicTextureManager* g_pTextureManager = NULL;
 cCommandScheduler* g_scheduler = new cCommandScheduler;
 // Call back signatures here
@@ -442,10 +447,9 @@ int main(int argc, char* argv[])
 	//	= glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f);
 	// Make it REALY transparent
 	//pTerrain->RGBA_colour.w = 1.f;
-	pTerrain->position = glm::vec3(-4000.0f, -560.0f, 4000.0f);
-	pTerrain->setRotationFromEuler(glm::vec3(4.7, 0, 0));
+	pTerrain->position = glm::vec3(0.0f, 0.0f, 0.0f);
 	pTerrain->isWireframe = false;
-	pTerrain->SetUniformScale(40);
+	pTerrain->SetUniformScale(1);
 	pTerrain->textures[0] = "grass.bmp";
 	pTerrain->textures[1] = "grass.bmp";
 	pTerrain->textures[2] = "grass.bmp";
@@ -455,38 +459,57 @@ int main(int argc, char* argv[])
 	pTerrain->textureRatios[2] = 0.5f;
 	pTerrain->textureRatios[3] = 0.5f;
 
-	g_pMeshObjects.push_back(pTerrain);
-	//basic Terrain Ground 0 0 0 0 0 0 1
+	cMeshObject* wall1 = new cMeshObject();
+	wall1->meshName = "Terrain";
+	wall1->friendlyName = "Wall1";
+	wall1->position = glm::vec3(100, 0, 0);
+	wall1->setRotationFromEuler(glm::vec3(0, 0, glm::radians(90.f)));
+	wall1->isWireframe = false;
+	wall1->SetUniformScale(1);
+	wall1->bDoNotLight = true;
+	wall1->textures[0] = "grass.bmp";
+	wall1->textureRatios[0] = 0.5f;
 
-	// MOON
-	cMeshObject* pMoon = new cMeshObject();
-	pMoon->meshName = "Moon";     //  "Terrain";
-	pMoon->friendlyName = "Moon";
-	//pTerrain->bUse_RGBA_colour = false;      // Use file colours    pTerrain->RGBA_colour = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
-	pTerrain->specular_colour_and_power = glm::vec4(1.0f, 1.0f, 1.0f, 1000.0f);
-	// Make it REALY transparent
-	pTerrain->RGBA_colour.w = 0.5f;
-	pMoon->position = glm::vec3(0.0f, 0.0f, 0.f);
-	pMoon->setRotationFromEuler(glm::vec3(4.7, 0, 0));
-	pMoon->isWireframe = false;
-	pMoon->SetUniformScale(40);
-	pMoon->textures[0] = "lroc_color_poles_4k.bmp";
-	pMoon->textures[1] = "lroc_color_poles_4k.bmp";
-	pMoon->textures[2] = "lroc_color_poles_4k.bmp";
-	pMoon->textures[3] = "lroc_color_poles_4k.bmp";
-	pMoon->textures[4] = "lroc_color_poles_4k.bmp";
-	pMoon->textures[5] = "lroc_color_poles_4k.bmp";
-	pMoon->textures[6] = "lroc_color_poles_4k.bmp";
-	pMoon->textures[7] = "lroc_color_poles_4k.bmp";
-	pMoon->textureRatios[0] = 0.5f;
-	pMoon->textureRatios[1] = 0.5f;
-	pMoon->textureRatios[2] = 0.5f;
-	pMoon->textureRatios[3] = 0.5f;
-	pMoon->textureRatios[4] = 0.5f;
-	pMoon->textureRatios[5] = 0.5f;
-	pMoon->textureRatios[6] = 0.5f;
-	pMoon->textureRatios[7] = 0.5f;
-	g_pMeshObjects.push_back(pMoon);
+	cMeshObject* wall2 = new cMeshObject();
+	wall2->meshName = "Terrain";
+	wall2->friendlyName = "Wall2";
+	wall2->position = glm::vec3(-100, 0, 0);
+	wall2->setRotationFromEuler(glm::vec3(0, 0, glm::radians(-90.f)));
+	wall2->isWireframe = false;
+	wall2->SetUniformScale(1);
+	wall2->bDoNotLight = true;
+	wall2->textures[0] = "grass.bmp";
+	wall2->textureRatios[0] = 0.5f;
+
+	cMeshObject* wall3 = new cMeshObject();
+	wall3->meshName = "Terrain";
+	wall3->friendlyName = "Wall3";
+	wall3->position = glm::vec3(0, 0, 100);
+	wall3->setRotationFromEuler(glm::vec3(glm::radians(-90.f), 0, 0));
+	wall3->isWireframe = false;
+	wall3->SetUniformScale(1);
+	wall3->bDoNotLight = true;
+	wall3->textures[0] = "grass.bmp";
+	wall3->textureRatios[0] = 0.5f;
+
+	cMeshObject* wall4 = new cMeshObject();
+	wall4->meshName = "Terrain";
+	wall4->friendlyName = "Wall4";
+	wall4->position = glm::vec3(0, 0, -100);
+	wall4->setRotationFromEuler(glm::vec3(glm::radians(90.f), 0, 0));
+	wall4->isWireframe = false;
+	wall4->SetUniformScale(1);
+	wall4->bDoNotLight = true;
+	wall4->textures[0] = "grass.bmp";
+	wall4->textureRatios[0] = 0.5f;
+
+	g_pMeshObjects.push_back(pTerrain);
+	g_pMeshObjects.push_back(wall1);
+	g_pMeshObjects.push_back(wall2);
+	g_pMeshObjects.push_back(wall3);
+	g_pMeshObjects.push_back(wall4);
+
+	//basic Terrain Ground 0 0 0 0 0 0 1
 	// DEBUG SPHERES
 	pDebugSphere_1 = new cMeshObject();
 	pDebugSphere_1->meshName = "ISO_Sphere_1";
@@ -540,65 +563,6 @@ int main(int argc, char* argv[])
 	pDebugSphere_5->bDoNotLight = true;
 	g_pMeshObjects.push_back(pDebugSphere_5);
 
-	// Beholder Beholder_Base_color.bmp
-	cMeshObject* pBeholder = new cMeshObject();
-	pBeholder->meshName = "Beholder";
-	pBeholder->friendlyName = "Beholder1";
-	pBeholder->bUse_RGBA_colour = true;      // Use file colours    pTerrain->RGBA_colour = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
-	pBeholder->specular_colour_and_power = glm::vec4(1.0f, 0.0f, 0.0f, 1000.0f);
-	pBeholder->position = glm::vec3(0);
-	pBeholder->setRotationFromEuler(glm::vec3(0));
-	pBeholder->isWireframe = false;
-	pBeholder->SetUniformScale(1.f);
-	pBeholder->textures[0] = "Beholder_Base_color.bmp";
-	pBeholder->textureRatios[0] = 1.0f;
-	pBeholder->textureRatios[1] = 1.0f;
-	pBeholder->textureRatios[2] = 1.0f;
-	pBeholder->textureRatios[3] = 1.0f;
-
-	cMeshObject* pBeholder2 = new cMeshObject();
-	cMeshObject* pBeholder3 = new cMeshObject();
-	*pBeholder2 = *pBeholder;
-	*pBeholder3 = *pBeholder;
-	pBeholder2->id = 30;
-	pBeholder3->id = 360;
-	pBeholder2->friendlyName = "Beholder2";
-	pBeholder3->friendlyName = "Beholder3";
-	g_pMeshObjects.push_back(pBeholder);
-	g_pMeshObjects.push_back(pBeholder2);
-	g_pMeshObjects.push_back(pBeholder3);
-	// Car
-	cMeshObject* pCar = new cMeshObject();
-	pCar->meshName = "Car";
-	pCar->friendlyName = "Car";
-	pCar->bUse_RGBA_colour = true;
-	pCar->specular_colour_and_power = glm::vec4(1.0f, 0.0f, 0.0f, 1000.0f);
-	pCar->position = glm::vec3(0);
-	pCar->setRotationFromEuler(glm::vec3(0));
-	pCar->isWireframe = false;
-	pCar->SetUniformScale(5.f);
-	pCar->textures[0] = "carbon.bmp";
-	pCar->textureRatios[0] = 1.0f;
-	pCar->textureRatios[1] = 1.0f;
-	pCar->textureRatios[2] = 1.0f;
-	pCar->textureRatios[3] = 1.0f;
-	g_pMeshObjects.push_back(pCar);
-	// 2nd Car
-	cMeshObject* pCar2 = new cMeshObject();
-	pCar2->meshName = "Car";
-	pCar2->friendlyName = "Car2";
-	pCar2->bUse_RGBA_colour = true;
-	pCar2->specular_colour_and_power = glm::vec4(1.0f, 0.0f, 0.0f, 1000.0f);
-	pCar2->position = glm::vec3(0);
-	pCar2->setRotationFromEuler(glm::vec3(0));
-	pCar2->isWireframe = false;
-	pCar2->SetUniformScale(5.f);
-	pCar2->textures[0] = "carbon.bmp";
-	pCar2->textureRatios[0] = 1.0f;
-	pCar2->textureRatios[1] = 1.0f;
-	pCar2->textureRatios[2] = 1.0f;
-	pCar2->textureRatios[3] = 1.0f;
-	g_pMeshObjects.push_back(pCar2);
 	GLint mvp_location = glGetUniformLocation(shaderID, "MVP");       // program
 	// uniform mat4 mModel;
 	// uniform mat4 mView;
@@ -699,55 +663,317 @@ int main(int argc, char* argv[])
 //	CarAnimations* car_animations = new CarAnimations;
 
 	//persistence::SaveModels(g_pMeshObjects);
-	persistence::LoadAll(g_pMeshObjects, g_pTheLightManager->vecTheLights);
+	//persistence::LoadAll(g_pMeshObjects, g_pTheLightManager->vecTheLights);
 
 	// Physics
-	iPhysicsFactory* physicsFactory = new PhysicsFactory();
-	iPhysicsWorld* world = physicsFactory->CreateWorld();
+	using namespace physics;
+	iPhysicsFactory* physicsFactory = new PhysicsFactory;
+	iPhysicsWorld* world = physicsFactory->CreateWorld();;
+	// Ground
+	GameObject* ground = new GameObject;
+	{
+		iShape* planeShape0 = new PlaneShape(0.0f, glm::vec3(0.f, 1.f, 0.f));
+		RigidBodyDesc desc;
+		desc.isStatic = true;
+		desc.mass = 0;
+		desc.position = glm::vec3(0, 0, 0);
+		desc.linearVelocity = glm::vec3(0.f);
+		desc.friction = 0.1f;
+		ground->rigidBody = physicsFactory->CreateRigidBody(desc, planeShape0);
+		ground->mesh = pTerrain;
+	}
+	//Wall 1
+	GameObject* goWall = new GameObject;
+	{
+		goWall->mesh = wall1;
+		iShape* planeShape = new PlaneShape(0.0f, glm::vec3(1.f, 0.f, 0.f));
 
+		RigidBodyDesc desc;
+		desc.isStatic = true;
+		desc.mass = 0;
+		desc.position = glm::vec3(99, 0.f, 0);
+		desc.linearVelocity = glm::vec3(0.f);
+		desc.rotation = wall1->qRotation;
+		goWall->rigidBody = physicsFactory->CreateRigidBody(desc, planeShape);
+	}
+	// Wall 2
+	GameObject* goWall2 = new GameObject;
+	{
+		goWall2->mesh = wall2;
+		iShape* planeShape2 = new PlaneShape(0.0f, glm::vec3(-1.f, 0.f, 0.f));
+
+		RigidBodyDesc desc2;
+		desc2.isStatic = true;
+		desc2.mass = 0;
+		desc2.position = glm::vec3(-99, 0.f, 0);
+		desc2.linearVelocity = glm::vec3(0.f);
+		desc2.rotation = wall2->qRotation;
+		goWall2->rigidBody = physicsFactory->CreateRigidBody(desc2, planeShape2);
+	}
+	// Wall 3
+	GameObject* goWall3 = new GameObject;
+	{
+		goWall3->mesh = wall3;
+		iShape* planeShape3 = new PlaneShape(0.0f, glm::vec3(0.f, 0.f, 1.f));
+
+		RigidBodyDesc desc3;
+		desc3.isStatic = true;
+		desc3.mass = 0;
+		desc3.position = glm::vec3(0.f, 0.f, 99.f);
+		desc3.linearVelocity = glm::vec3(0.f);
+		desc3.rotation = wall3->qRotation;
+		goWall3->rigidBody = physicsFactory->CreateRigidBody(desc3, planeShape3);
+	}
+	// Wall 4
+	GameObject* goWall4 = new GameObject;
+	{
+		goWall4->mesh = wall4;
+		iShape* planeShape4 = new PlaneShape(0.0f, glm::vec3(0.f, 0.f, -1.f));
+
+		RigidBodyDesc desc4;
+		desc4.isStatic = true;
+		desc4.mass = 0;
+		desc4.position = glm::vec3(0, 0.f, -99.f);
+		desc4.linearVelocity = glm::vec3(0.f);
+		desc4.rotation = wall4->qRotation;
+		goWall4->rigidBody = physicsFactory->CreateRigidBody(desc4, planeShape4);
+	}
+	// Balls
 	GameObject* ballOne = new GameObject;
-	GameObject ballTwo;
-	GameObject ballThree;
-	GameObject ballFour;
-	GameObject ballFive;
+	{
+		cMeshObject* meshBall = new cMeshObject();
+		meshBall->meshName = "ISO_Sphere_1";
+		meshBall->friendlyName = "BallOne";
+		meshBall->position = glm::vec3(50,50,50);
+		meshBall->isWireframe = false;
+		meshBall->bDoNotLight = false;
+		meshBall->bUse_RGBA_colour = true;
+		meshBall->RGBA_colour = glm::vec4(1, 0, 0, 1);
+		meshBall->Enabled = true;
+		meshBall->scaleXYZ = glm::vec3(2);
 
-	RigidBodyDesc ballDesc;
-	ballDesc.isStatic = false;
-	ballDesc.mass = 10.f;
-	ballDesc.position = Vector3(0.f, 0.f, 0.f);
-	ballDesc.linearVelocity = Vector3(10.f, 0.f, 0.f);
-	iShape* ballShape = new SphereShape(1.0f);
+		RigidBodyDesc ballDesc;
+		ballDesc.isStatic = false;
+		ballDesc.mass = 2;
+		ballDesc.position = glm::vec3(50,50,50);
+		ballDesc.linearVelocity = Vector3(0.f, 0.f, 0.f);
+		iShape* ballShape = new SphereShape(2);
 
-	ballOne->rigidBody = physicsFactory->CreateRigidBody(ballDesc, ballShape);
+		ballOne->mesh = meshBall;
+		ballOne->rigidBody = physicsFactory->CreateRigidBody(ballDesc, ballShape);
+		g_pMeshObjects.push_back(ballOne->mesh);
+		physicObjects.push_back(ballOne);
+	}
+	GameObject* ballTwo = new GameObject;
+	{
+		cMeshObject* meshBall = new cMeshObject();
+		meshBall->meshName = "ISO_Sphere_1";
+		meshBall->friendlyName = "BallTwo";
+		meshBall->position = glm::vec3(0.f, 50.f, 0.f);
+		meshBall->isWireframe = false;
+		meshBall->bDoNotLight = false;
+		meshBall->bUse_RGBA_colour = true;
+		meshBall->RGBA_colour = glm::vec4(1, 0, 0, 1);
+		meshBall->Enabled = true;
+		meshBall->scaleXYZ = glm::vec3(5);
+
+		RigidBodyDesc ballDesc;
+		ballDesc.isStatic = false;
+		ballDesc.mass = 5;
+		ballDesc.position = glm::vec3(0.f, 50.f, 0.f);
+		ballDesc.linearVelocity = Vector3(0.f, 0.f, 0.f);
+		iShape* ballShape = new SphereShape(5);
+
+		ballTwo->mesh = meshBall;
+		ballTwo->rigidBody = physicsFactory->CreateRigidBody(ballDesc, ballShape);
+		g_pMeshObjects.push_back(ballTwo->mesh);
+		physicObjects.push_back(ballTwo);
+	}
+	GameObject* ballThree = new GameObject;
+	{
+		cMeshObject* meshBall = new cMeshObject();
+		meshBall->meshName = "ISO_Sphere_1";
+		meshBall->friendlyName = "BallThree";
+		meshBall->position = glm::vec3(50.f, 50.f, 0.f);
+		meshBall->isWireframe = false;
+		meshBall->bDoNotLight = false;
+		meshBall->bUse_RGBA_colour = true;
+		meshBall->RGBA_colour = glm::vec4(1, 0, 0, 1);
+		meshBall->Enabled = true;
+		meshBall->scaleXYZ = glm::vec3(3.5);
+
+		RigidBodyDesc ballDesc;
+		ballDesc.isStatic = false;
+		ballDesc.mass = 3.5;
+		ballDesc.position = glm::vec3(50.f, 50.f, 0.f);
+		ballDesc.linearVelocity = Vector3(0.f, 0.f, 0.f);
+		iShape* ballShape = new SphereShape(3.5);
+
+		ballThree->mesh = meshBall;
+		ballThree->rigidBody = physicsFactory->CreateRigidBody(ballDesc, ballShape);
+		g_pMeshObjects.push_back(ballThree->mesh);
+		physicObjects.push_back(ballThree);
+	}
+	GameObject* ballFour = new GameObject;
+	{
+		cMeshObject* meshBall = new cMeshObject();
+		meshBall->meshName = "ISO_Sphere_1";
+		meshBall->friendlyName = "BallFour";
+		meshBall->position = glm::vec3(-50.f, 50.f, 0.f);
+		meshBall->isWireframe = false;
+		meshBall->bDoNotLight = false;
+		meshBall->bUse_RGBA_colour = true;
+		meshBall->RGBA_colour = glm::vec4(1, 0, 0, 1);
+		meshBall->Enabled = true;
+		meshBall->scaleXYZ = glm::vec3(7);
+
+		RigidBodyDesc ballDesc;
+		ballDesc.isStatic = false;
+		ballDesc.mass = 7;
+		ballDesc.position = glm::vec3(-50.f, 50.f, 0.f);
+		ballDesc.linearVelocity = Vector3(0.f, 0.f, 0.f);
+		iShape* ballShape = new SphereShape(7);
+
+		ballFour->mesh = meshBall;
+		ballFour->rigidBody = physicsFactory->CreateRigidBody(ballDesc, ballShape);
+		g_pMeshObjects.push_back(ballFour->mesh);
+		physicObjects.push_back(ballFour);
+	}
+	GameObject* ballFive = new GameObject;
+	{
+		cMeshObject* meshBall = new cMeshObject();
+		meshBall->meshName = "ISO_Sphere_1";
+		meshBall->friendlyName = "BallFive";
+		meshBall->position = glm::vec3(0.f, 50.f, 40.f);
+		meshBall->isWireframe = false;
+		meshBall->bDoNotLight = false;
+		meshBall->bUse_RGBA_colour = true;
+		meshBall->RGBA_colour = glm::vec4(1, 0, 0, 1);
+		meshBall->Enabled = true;
+		meshBall->scaleXYZ = glm::vec3(6);
+
+		RigidBodyDesc ballDesc;
+		ballDesc.isStatic = false;
+		ballDesc.mass = 6;
+		ballDesc.position = glm::vec3(0.f, 50.f, 40.f);
+		ballDesc.linearVelocity = Vector3(0.f, 0.f, 0.f);
+		iShape* ballShape = new SphereShape(6);
+
+		ballFive->mesh = meshBall;
+		ballFive->rigidBody = physicsFactory->CreateRigidBody(ballDesc, ballShape);
+		g_pMeshObjects.push_back(ballFive->mesh);
+		physicObjects.push_back(ballFive);
+	}
+	GameObject* ballSix = new GameObject;
+	{
+		cMeshObject* meshBall = new cMeshObject();
+		meshBall->meshName = "ISO_Sphere_1";
+		meshBall->friendlyName = "BallSix";
+		meshBall->position = glm::vec3(30.f, 50.f, 40.f);
+		meshBall->isWireframe = false;
+		meshBall->bDoNotLight = false;
+		meshBall->bUse_RGBA_colour = true;
+		meshBall->RGBA_colour = glm::vec4(1, 0, 0, 1);
+		meshBall->Enabled = true;
+		meshBall->scaleXYZ = glm::vec3(15);
+
+		RigidBodyDesc ballDesc;
+		ballDesc.isStatic = false;
+		ballDesc.mass = 15;
+		ballDesc.position = glm::vec3(30.f, 50.f, 40.f);
+		ballDesc.linearVelocity = Vector3(0.f, 0.f, 0.f);
+		iShape* ballShape = new SphereShape(15);
+
+		ballSix->mesh = meshBall;
+		ballSix->rigidBody = physicsFactory->CreateRigidBody(ballDesc, ballShape);
+		g_pMeshObjects.push_back(ballSix->mesh);
+		physicObjects.push_back(ballSix);
+	}
+	GameObject* ballSeven = new GameObject;
+	{
+		cMeshObject* meshBall = new cMeshObject();
+		meshBall->meshName = "ISO_Sphere_1";
+		meshBall->friendlyName = "BallSeven";
+		meshBall->position = glm::vec3(-30.f, 50.f, 40.f);
+		meshBall->isWireframe = false;
+		meshBall->bDoNotLight = false;
+		meshBall->bUse_RGBA_colour = true;
+		meshBall->RGBA_colour = glm::vec4(1, 0, 0, 1);
+		meshBall->Enabled = true;
+		meshBall->scaleXYZ = glm::vec3(8);
+
+		RigidBodyDesc ballDesc;
+		ballDesc.isStatic = false;
+		ballDesc.mass = 8;
+		ballDesc.position = glm::vec3(-30.f, 50.f, 40.f);
+		ballDesc.linearVelocity = Vector3(0.f, 0.f, 0.f);
+		iShape* ballShape = new SphereShape(8);
+
+		ballSeven->mesh = meshBall;
+		ballSeven->rigidBody = physicsFactory->CreateRigidBody(ballDesc, ballShape);
+		g_pMeshObjects.push_back(ballSeven->mesh);
+		physicObjects.push_back(ballSeven);
+	}
+	// World
+	world->AddBody(ground->rigidBody);
+	world->AddBody(goWall->rigidBody);
+	world->AddBody(goWall2->rigidBody);
+	world->AddBody(goWall3->rigidBody);
+	world->AddBody(goWall4->rigidBody);
 	world->AddBody(ballOne->rigidBody);
-	cMeshObject* ball = new cMeshObject();
-	ball->meshName = "ISO_Sphere_1";
-	ball->position = glm::vec3(0);
-	ball->isWireframe = "Ball";
-	ball->bDoNotLight = true;
-	ball->bUse_RGBA_colour = true;
-	ball->RGBA_colour = glm::vec4(1, 0, 0, 1);
-	ball->Enabled = true;
-	ball->scaleXYZ = glm::vec3(5);
-	ballOne->mesh = ball;
-	g_pMeshObjects.push_back(ball);
+	world->AddBody(ballTwo->rigidBody);
+	world->AddBody(ballThree->rigidBody);
+	world->AddBody(ballFour->rigidBody);
+	world->AddBody(ballFive->rigidBody);
+	world->AddBody(ballSix->rigidBody);
+	world->AddBody(ballSeven->rigidBody);
+	world->SetGravity(glm::vec3(0, -9.81, 0));
+	g_cameraTarget = glm::vec3(0.f, 0, 0.f);
+	g_cameraEye = glm::vec3(1.f, 150, 0.f);
+	theEditMode = PHYSICS_TEST;
+	//iCollisionListener* listener = new CollisionListener;
+	//world->RegisterCollisionListener(listener);
 	while (!glfwWindowShouldClose(window))
 	{
-		world->TimeStep(0.1f);
-		Vector3 vecPos;
-		ballOne->rigidBody->GetPosition(vecPos);
-		ballOne->mesh->position = glm::vec3(vecPos.x, vecPos.y, vecPos.z);
-			::g_pTheLightManager->CopyLightInformationToShader(shaderID);
-		//	pBrain->Update(0.1f);
-		duration = (std::clock() - deltaTime) / (double)CLOCKS_PER_SEC;
-		//g_engine.PhysicsUpdate(0.05);
-
-		//ai_system.update(0.1);
-		if (!menuMode)
+		// Doing this here to get a faster reponse time
 		{
-			mouse_camera_update(window);
-			//g_engine.Update(0.1);
+			float force = 5.f;
+			glm::vec3 direction(0.f);
+			glm::vec3 forwardVector(g_cameraEye.x, 0.0f, g_cameraEye.z);
+			glm::vec3 rightVector(glm::cross(forwardVector, glm::vec3(0, 1, 0)));
+			if (glfwGetKey(window, GLFW_KEY_W))
+			{
+				direction -= forwardVector * 1.f;
+			}
+			if (glfwGetKey(window, GLFW_KEY_S))
+			{
+				direction += forwardVector * 1.f;
+			}
+			if (glfwGetKey(window, GLFW_KEY_A))
+			{
+				direction += rightVector * 1.f;
+			}
+			if (glfwGetKey(window, GLFW_KEY_D))
+			{
+				direction -= rightVector * 1.f;
+			}
+			physicObjects[ballIndex]->rigidBody->ApplyForce(direction * force);
 		}
+		// Physics Update
+		world->TimeStep(0.1f);
+		// Update all Mesh positions to rigidbody positions
+		for (GameObject* go : physicObjects)
+		{
+			Vector3 pos;
+			go->rigidBody->GetPosition(pos);
+			go->mesh->position = glm::vec3(pos);
+			go->rigidBody->GetRotation(go->mesh->qRotation);
+		}
+		::g_pTheLightManager->CopyLightInformationToShader(shaderID);
+		duration = (std::clock() - deltaTime) / (double)CLOCKS_PER_SEC;
+		// Mouse Lookaround
+		if (!menuMode && theEditMode != PHYSICS_TEST)
+			mouse_camera_update(window);
 		DrawConcentricDebugLightObjects();
 		float ratio;
 		int width, height;
@@ -762,9 +988,17 @@ int main(int argc, char* argv[])
 
 		glm::vec3 upVector = glm::vec3(0.0f, 1.0f, 0.0f);
 
-		matView = glm::lookAt(::g_cameraEye,
-			::g_cameraEye + ::g_cameraTarget,
-			upVector);
+		if (theEditMode == PHYSICS_TEST)
+		{
+			matView = glm::lookAt(::g_cameraEye,
+				::g_cameraTarget,
+				upVector);
+		}
+		else {
+			matView = glm::lookAt(::g_cameraEye,
+				::g_cameraEye + ::g_cameraTarget,
+				upVector);
+		}
 		// Pass eye location to the shader
 		// uniform vec4 eyeLocation;
 		GLint eyeLocation_UniLoc = glGetUniformLocation(shaderID, "eyeLocation");
@@ -928,6 +1162,10 @@ int main(int argc, char* argv[])
 			<< ::g_cameraEye.x << ", "
 			<< ::g_cameraEye.y << ", "
 			<< ::g_cameraEye.z
+			<< "Target (x,y,z): "
+			<< ::g_cameraTarget.x << ", "
+			<< ::g_cameraTarget.y << ", "
+			<< ::g_cameraTarget.z
 			<< "  Light #" << currentLight << " (xyz): "
 			<< ::g_pTheLightManager->vecTheLights[currentLight].position.x << ", "
 			<< ::g_pTheLightManager->vecTheLights[currentLight].position.y << ", "

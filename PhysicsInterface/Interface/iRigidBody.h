@@ -12,6 +12,7 @@ namespace physics
 		virtual ~iRigidBody() {}
 
 		virtual void GetPosition(Vector3& position) = 0;
+		virtual glm::vec3 GetGLMPosition() = 0;
 		virtual void SetPosition(const Vector3& position) = 0;
 
 		virtual void GetRotation(Quaternion& rotation) = 0;

@@ -11,6 +11,8 @@
 #include "cVAOManager/sModelDrawInfo.h"
 #include "cLightManager.h"
 #include "cVAOManager/cVAOManager.h"
+#include <Interface/iPhysicsFactory.h>
+#include <Interface/iPhysicsWorld.h>
 // extern means the variable isn't actually here...
 // ...it's somewhere else (in a .cpp file somewhere)
 extern GLFWwindow* window;
@@ -26,7 +28,8 @@ enum eEditMode
 	MOVING_CAMERA,
 	MOVING_LIGHT,
 	MOVING_SELECTED_OBJECT,
-	MOVING_PHYSICS_OBJECT
+	MOVING_PHYSICS_OBJECT,
+	PHYSICS_TEST,
 };
 enum eGameMode
 {
@@ -46,4 +49,5 @@ extern bool pause;
 extern bool reverse;
 extern AnimationManager* animation_manager;
 extern AnimationEvents* event_handler;
+
 #endif

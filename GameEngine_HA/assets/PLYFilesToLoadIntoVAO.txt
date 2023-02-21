@@ -1,4 +1,4 @@
-assets/models/terrain.ply
+assets/models/plane.ply
 Terrain
 assets/models/UV_Sphere_for_Skybox_inverted_Normals_xyz_uv_n_rgba.ply
 Skybox_Sphere

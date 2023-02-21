@@ -12,6 +12,8 @@
 // These are defined in theMainFunction.cpp
 extern glm::vec3 g_cameraEye;// = glm::vec3(0.0, 0.0, -25.0f);
 extern glm::vec3 g_cameraTarget;// = glm::vec3(0.0f, 0.0f, 0.0f);
+static glm::mat4 camMat = glm::mat4(1.0f);
+int ballIndex = 0;
 
 bool bEnableDebugLightingObjects = true;
 float OBJECT_MOVE_SPEED = 0.1f;
@@ -41,6 +43,8 @@ static int m_CurrMouseY;
 static int m_MouseDownX;
 static int m_MouseDownY;
 static float m_HorizontalAngle;
+int turn = 0;
+int angle [4] = { 0.f, 0.0001f, 0.001f, 0.01f };
 void mouse_camera_update(GLFWwindow* window)
 {
 	m_PrevMouseX = m_CurrMouseX;
@@ -93,7 +97,8 @@ void key_callback(GLFWwindow* window,
 			menuMode = !menuMode;
 			if (menuMode)
 				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-			else glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			else 
+				glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
 		if (key == GLFW_KEY_S && action == GLFW_PRESS)
 		{
@@ -153,6 +158,48 @@ void key_callback(GLFWwindow* window,
 
 		switch (theEditMode)
 		{
+		case PHYSICS_TEST:
+		{
+			if (key == GLFW_KEY_COMMA && action == GLFW_PRESS)
+			{
+				ballIndex--;
+				if (ballIndex < 0)
+				{
+					ballIndex = 6;
+				}
+			}
+			if (key == GLFW_KEY_PERIOD && action == GLFW_PRESS)
+			{
+				ballIndex++;
+				if (ballIndex > 6)
+				{
+					ballIndex = 0;
+				}
+			}
+			if (key == GLFW_KEY_UP)
+			{
+				g_cameraEye.y -= 5.f;
+			}
+			if (key == GLFW_KEY_DOWN)
+			{
+				g_cameraEye.y += 5.f;
+			}
+			if (key == GLFW_KEY_RIGHT)
+			{
+				glm::mat4 camMat(1);
+				camMat = glm::rotate(camMat, glm::radians(5.f), glm::vec3(0.f, 1.f, 0.f));
+				glm::vec3 result = glm::vec3(camMat * glm::vec4(g_cameraEye, 1.f));
+				g_cameraEye = result;
+			}
+			if (key == GLFW_KEY_LEFT)
+			{
+				glm::mat4 camMat(1);
+				camMat = glm::rotate(camMat, glm::radians(-5.f), glm::vec3(0.f, 1.f, 0.f));
+				glm::vec3 result = glm::vec3(camMat * glm::vec4(g_cameraEye, 1.f));
+				g_cameraEye = result;
+			}
+		}
+		break;
 		case MOVING_CAMERA:
 		{
 			// Move the camera
@@ -160,85 +207,7 @@ void key_callback(GLFWwindow* window,
 			//        WS - forward and back
 			glm::vec3 forwardVector(g_cameraTarget.x, 0.0f, g_cameraTarget.z);
 			glm::vec3 rightVector(glm::cross(forwardVector, glm::vec3(0, 1, 0)));
-			//if (glfwGetKey(window, GLFW_KEY_A))     // Left
-			//{
-			//	if (glfwGetKey(window, GLFW_KEY_W))
-			//	{
-			//		player->physics_object->ApplyForce((-rightVector + forwardVector) * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt((-rightVector + forwardVector), glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
-			//	else if (glfwGetKey(window, GLFW_KEY_S))
-			//	{
-			//		player->physics_object->ApplyForce((-rightVector - forwardVector) * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt((-rightVector - forwardVector), glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
-			//	else {
-			//		player->physics_object->ApplyForce(-rightVector * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt(-rightVector, glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
-			//}
-			//else if (glfwGetKey(window, GLFW_KEY_D))     // Right
-			//{
-			//	if (glfwGetKey(window, GLFW_KEY_W))
-			//	{
-			//		player->physics_object->ApplyForce((rightVector + forwardVector) * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt((rightVector + forwardVector), glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
-			//	else if (glfwGetKey(window, GLFW_KEY_S))
-			//	{
-			//		player->physics_object->ApplyForce((rightVector - forwardVector) * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt((rightVector - forwardVector), glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
-			//	else {
-			//		player->physics_object->ApplyForce(rightVector * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt(rightVector, glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
-			//}
-			//else if (glfwGetKey(window, GLFW_KEY_W))     // Forward
-			//{
-			//	if (glfwGetKey(window, GLFW_KEY_A))
-			//	{
-			//		player->physics_object->ApplyForce((forwardVector - rightVector) * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt((forwardVector - rightVector), glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
-			//	else if (glfwGetKey(window, GLFW_KEY_D))
-			//	{
-			//		player->physics_object->ApplyForce((forwardVector + rightVector) * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt((forwardVector + rightVector), glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
-			//	else {
-			//		player->physics_object->ApplyForce(forwardVector * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt(forwardVector, glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
-			//}
-			//else if (glfwGetKey(window, GLFW_KEY_S))     // Backwards
-			//{
-			//	if (glfwGetKey(window, GLFW_KEY_A))
-			//	{
-			//		player->physics_object->ApplyForce((-forwardVector - rightVector) * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt((-forwardVector - rightVector), glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
-			//	else if (glfwGetKey(window, GLFW_KEY_D))
-			//	{
-			//		player->physics_object->ApplyForce((-forwardVector + rightVector) * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt((-forwardVector + rightVector), glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
-			//	else {
-			//		player->physics_object->ApplyForce(-forwardVector * PLAYER_MOVE_SPEED);
-			//		glm::quat targetDir = q_utils::LookAt(-forwardVector, glm::vec3(0, 1, 0));
-			//		player->qRotation = q_utils::RotateTowards(player->qRotation, targetDir, 3.14f * 0.05f);
-			//	}
+
 			if (key == GLFW_KEY_A)     // Left
 			{
 				::g_cameraEye -= rightVector * CAMERA_MOVE_SPEED;

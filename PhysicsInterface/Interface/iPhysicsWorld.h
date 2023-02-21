@@ -10,7 +10,7 @@ namespace physics
 	public:
 		virtual ~iCollisionListener() {}
 
-		virtual void NotifyCollision(iCollisionBody* bodyA, iCollisionBody* bodyB) = 0;
+		virtual bool NotifyCollision(iCollisionBody* bodyA, iCollisionBody* bodyB) = 0;
 
 	protected:
 		iCollisionListener() {}

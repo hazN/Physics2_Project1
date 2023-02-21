@@ -21,6 +21,7 @@ namespace physics
 
 		bool IsStatic();
 		virtual void GetPosition(Vector3& position) override;
+		virtual glm::vec3 GetGLMPosition() override;
 		virtual void SetPosition(const Vector3& position) override;
 
 		virtual void GetRotation(Quaternion& rotation) override;

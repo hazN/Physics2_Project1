@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollisionListener.h" />
     <ClInclude Include="GDPPhysics\gdp\CollisionHandler.h" />
     <ClInclude Include="GDPPhysics\gdp\PhysicsFactory.h" />
     <ClInclude Include="GDPPhysics\gdp\PhysicsWorld.h" />
@@ -26,6 +27,7 @@
     <ClInclude Include="GDPPhysics\gdp\SoftBody.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CollisionListener.cpp" />
     <ClCompile Include="GDPPhysics\gdp\CollisionHandler.cpp" />
     <ClCompile Include="GDPPhysics\gdp\PhysicsFactory.cpp" />
     <ClCompile Include="GDPPhysics\gdp\PhysicsWorld.cpp" />

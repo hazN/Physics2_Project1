@@ -51,6 +51,11 @@ namespace physics
 		position = m_Position;
 	}
 
+	glm::vec3 RigidBody::GetGLMPosition()
+	{
+		return glm::vec3(m_Position.x, m_Position.y, m_Position.z);
+	}
+
 	void RigidBody::SetPosition(const Vector3& position)
 	{
 		m_Position = position;

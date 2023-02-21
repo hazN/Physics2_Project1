@@ -11,9 +11,7 @@ namespace physics
 
 	PhysicsWorld::~PhysicsWorld()
 	{
-		// TODO:
-		// Clear rigid body vector
-		// Delete everything
+		m_RigidBodies.clear();
 	}
 
 	void PhysicsWorld::SetGravity(const Vector3& gravity)
@@ -118,12 +116,12 @@ namespace physics
 		}
 
 		// A list of collisions..
-		// Here we can collision callbacks.
-		for (int i = 0; i < collisions.size(); i++)
-		{
-			CollidingBodies& collision  = collisions[i];
-			m_CollisionListener->NotifyCollision(collision.bodyA, collision.bodyB);
-		}
+		//// Here we can collision callbacks.
+		//for (int i = 0; i < collisions.size(); i++)
+		//{
+		//	CollidingBodies& collision  = collisions[i];
+		//	m_CollisionListener->NotifyCollision(collision.bodyA, collision.bodyB);
+		//}
 
 		// Step #2 : Verlet
 		// velocity += acceleration * (dt/2)

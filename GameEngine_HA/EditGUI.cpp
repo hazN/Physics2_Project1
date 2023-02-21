@@ -25,7 +25,8 @@ void GUI::render()
 
 	ImGui::RadioButton("Camera", &theEditMode, eEditMode::MOVING_CAMERA); ImGui::SameLine();
 	ImGui::RadioButton("Lights", &theEditMode, eEditMode::MOVING_LIGHT); ImGui::SameLine();
-	ImGui::RadioButton("Models", &theEditMode, eEditMode::MOVING_SELECTED_OBJECT);
+	ImGui::RadioButton("Models", &theEditMode, eEditMode::MOVING_SELECTED_OBJECT); ImGui::SameLine();
+	ImGui::RadioButton("PhysicsTest", &theEditMode, eEditMode::PHYSICS_TEST);
 	if (ImGui::Button("Save"))
 		persistence::SaveAll(g_pMeshObjects, g_pTheLightManager->vecTheLights);
 	ImGui::SameLine();
