@@ -1,10 +1,12 @@
-INFO-6045 Project 1
+INFO-6022 Project 1
 Hassan Assaf
-Due Feb. 6th
+Due Feb. 20th
 
 PRESS ESCAPE UNLOCK/LOCK THE MOUSE
 
-<- -> Keys to change sequences
-Space to Pause/Unpause
-1-5 to change speed
-r to reverse
+Controls:
+
+WASD -> Ball Movement
+UP/DOWN ARROW -> Zoom In/Out
+LEFT/RIGHT ARROW -> Rotate Camera
+, . -> Prev/Next Ball
